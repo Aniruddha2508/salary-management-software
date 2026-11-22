@@ -91,6 +91,15 @@ RSpec.describe "Api::V1::Employees" do
       expect(body["employees"].size).to eq(1)
       expect(body["pagination"]).to include("page" => 2, "limit" => 1, "count" => 2)
     end
+
+    it "returns an empty page rather than erroring when the page number is past the last page" do
+      get "/api/v1/employees", params: { per_page: 1, page: 9999 }
+
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+      expect(body["employees"]).to eq([])
+      expect(body["pagination"]).to include("count" => 2, "limit" => 1)
+    end
   end
 
   describe "GET /api/v1/employees/:id" do

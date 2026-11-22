@@ -15,12 +15,21 @@ module Api
         scope = apply_filters(scope)
         scope = apply_sort(scope)
 
-        pagy, employees = pagy(scope, limit: per_page)
-
-        render json: {
-          employees: employees.map { |employee| employee_json(employee) },
-          pagination: pagination_json(pagy),
-        }, status: :ok
+        begin
+          pagy, employees = pagy(scope, limit: per_page)
+          render json: {
+            employees: employees.map { |employee| employee_json(employee) },
+            pagination: pagination_json(pagy),
+          }, status: :ok
+        rescue Pagy::OverflowError
+          # A page number past the last page (e.g. the list shrank from
+          # someone else deleting records while paginated forward) isn't
+          # a server error - just an empty result for that page.
+          render json: {
+            employees: [],
+            pagination: empty_pagination_json(scope),
+          }, status: :ok
+        end
       end
 
       # GET /api/v1/employees/:id
@@ -122,6 +131,12 @@ module Api
 
       def pagination_json(pagy)
         { page: pagy.page, pages: pagy.pages, count: pagy.count, limit: pagy.limit }
+      end
+
+      def empty_pagination_json(scope)
+        count = scope.count
+        limit = per_page
+        { page: params[:page].to_i, pages: [(count.to_f / limit).ceil, 1].max, count: count, limit: limit }
       end
 
       def render_validation_errors(employee)

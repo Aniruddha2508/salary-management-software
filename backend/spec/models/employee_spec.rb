@@ -81,6 +81,20 @@ RSpec.describe Employee do
       expect(employee).not_to be_valid
       expect(employee.errors[:manager_id]).to include("can't be the employee's own id")
     end
+
+    it "rejects a manager_id that doesn't refer to an existing employee" do
+      employee = build(:employee, manager_id: 999_999_999)
+
+      expect(employee).not_to be_valid
+      expect(employee.errors[:manager_id]).to include("must refer to an existing employee")
+    end
+
+    it "does not raise a database-level foreign key error for an invalid manager_id" do
+      employee = build(:employee, manager_id: 999_999_999)
+
+      expect { employee.save }.not_to raise_error
+      expect(employee.persisted?).to be(false)
+    end
   end
 
   describe "normalization" do
