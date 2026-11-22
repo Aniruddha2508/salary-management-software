@@ -20,3 +20,12 @@ puts "Seeded HR Manager user: #{hr_manager.email}"
 if ENV["HR_MANAGER_PASSWORD"].blank?
   puts "  (using default dev password 'password123' - set HR_MANAGER_PASSWORD to override)"
 end
+
+# --- Employees ---------------------------------------------------------
+#
+# Generates 10,000 employee records for local development and demos.
+# Each country maps to exactly one currency, so analytics never has to
+# reconcile mixed currencies within a single country (see
+# docs/requirements.md - "no blended total payroll figure").
+EmployeeSeeder.new.seed!(count: 10_000)
+puts "Seeded #{Employee.count} employees."
