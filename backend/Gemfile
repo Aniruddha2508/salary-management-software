@@ -22,7 +22,7 @@ gem "bootsnap", require: false
 gem "rack-cors"
 
 # Lightweight, fast pagination for the 10,000-row employee list
-gem "pagy", "~> 9.3"
+gem "pagy", "~> 43.8"
 
 # Bulk-insert helper for the seed script (10,000 records)
 gem "activerecord-import"
