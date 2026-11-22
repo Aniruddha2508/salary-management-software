@@ -3,6 +3,8 @@ import { LoginPage } from './features/auth/LoginPage'
 import { ProtectedRoute } from './features/auth/ProtectedRoute'
 import { DashboardPage } from './features/dashboard/DashboardPage'
 import { EmployeesListPage } from './features/employees/EmployeesListPage'
+import { EmployeeDetailPage } from './features/employees/EmployeeDetailPage'
+import { EmployeeFormPage } from './features/employees/EmployeeFormPage'
 
 function App() {
   return (
@@ -12,6 +14,9 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/employees" element={<EmployeesListPage />} />
+        <Route path="/employees/new" element={<EmployeeFormPage />} />
+        <Route path="/employees/:id" element={<EmployeeDetailPage />} />
+        <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
