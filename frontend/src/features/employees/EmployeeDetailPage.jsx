@@ -79,7 +79,7 @@ export function EmployeeDetailPage() {
   return (
     <Container size="sm" pt="xl">
       <Stack gap="md">
-        <Group justify="space-between">
+        <Group justify="space-between" wrap="wrap">
           <Title order={2}>
             {employee.first_name} {employee.last_name}
           </Title>
@@ -97,7 +97,7 @@ export function EmployeeDetailPage() {
         </Group>
 
         <Paper withBorder p="xl" radius="md">
-          <SimpleGrid cols={2} spacing="md">
+          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
             <Field label="Employee ID" value={employee.employee_id} />
             <Field label="Email" value={employee.email} />
             <Field label="Country" value={employee.country} />

@@ -11,6 +11,7 @@ import {
   Loader,
   Pagination,
   Select,
+  SimpleGrid,
   Stack,
   Table,
   Text,
@@ -78,7 +79,7 @@ export function EmployeesListPage() {
   return (
     <Container size="xl" pt="xl">
       <Stack gap="md">
-        <Group justify="space-between">
+        <Group justify="space-between" wrap="wrap">
           <Title order={2}>Employees</Title>
           <Group>
             <Button component={Link} to="/employees/new">
@@ -90,7 +91,7 @@ export function EmployeesListPage() {
           </Group>
         </Group>
 
-        <Group grow>
+        <SimpleGrid cols={{ base: 1, xs: 2, sm: 4 }}>
           <TextInput
             label="Search"
             placeholder="Name, employee ID, or email"
@@ -122,7 +123,7 @@ export function EmployeesListPage() {
             value={sortBy}
             onChange={(value) => toggleSort(value ?? 'employee_id')}
           />
-        </Group>
+        </SimpleGrid>
 
         {isError && (
           <Alert color="red" title="Couldn't load employees">
@@ -142,7 +143,8 @@ export function EmployeesListPage() {
               {data.pagination.count.toLocaleString()} employees found
             </Text>
 
-            <Table striped highlightOnHover>
+            <Table.ScrollContainer minWidth={900}>
+              <Table striped highlightOnHover>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Employee ID</Table.Th>
@@ -179,7 +181,8 @@ export function EmployeesListPage() {
                   </Table.Tr>
                 ))}
               </Table.Tbody>
-            </Table>
+              </Table>
+            </Table.ScrollContainer>
 
             {data.employees.length === 0 && (
               <Text c="dimmed" ta="center" py="xl">

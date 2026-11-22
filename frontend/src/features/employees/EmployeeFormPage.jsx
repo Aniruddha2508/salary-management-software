@@ -10,6 +10,7 @@ import {
   NumberInput,
   Paper,
   Select,
+  SimpleGrid,
   Stack,
   Text,
   TextInput,
@@ -139,34 +140,34 @@ export function EmployeeFormPage() {
 
           <form onSubmit={form.onSubmit((values) => saveMutation.mutate(values))}>
             <Stack gap="sm">
-              <Group grow>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput label="Employee ID" placeholder="EMP00001" {...form.getInputProps('employee_id')} />
                 <TextInput label="Email" {...form.getInputProps('email')} />
-              </Group>
-              <Group grow>
+              </SimpleGrid>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput label="First name" {...form.getInputProps('first_name')} />
                 <TextInput label="Last name" {...form.getInputProps('last_name')} />
-              </Group>
-              <Group grow>
+              </SimpleGrid>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <Select label="Country" data={COUNTRIES} {...form.getInputProps('country')} />
                 <Select label="Department" data={DEPARTMENTS} {...form.getInputProps('department')} />
-              </Group>
-              <Group grow>
+              </SimpleGrid>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput label="Job title" {...form.getInputProps('job_title')} />
                 <Select
                   label="Employment type"
                   data={EMPLOYMENT_TYPES.map((value) => ({ value, label: value.replace('_', ' ') }))}
                   {...form.getInputProps('employment_type')}
                 />
-              </Group>
-              <Group grow>
+              </SimpleGrid>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput type="date" label="Hire date" {...form.getInputProps('hire_date')} />
                 <TextInput type="date" label="Effective date" {...form.getInputProps('effective_date')} />
-              </Group>
-              <Group grow>
+              </SimpleGrid>
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <NumberInput label="Base salary" min={0} {...form.getInputProps('base_salary')} />
                 <TextInput label="Currency" placeholder="USD" {...form.getInputProps('currency')} />
-              </Group>
+              </SimpleGrid>
               <NumberInput
                 label="Manager (internal ID, optional)"
                 description="The internal ID shown on the manager's employee detail page."

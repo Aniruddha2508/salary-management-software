@@ -56,7 +56,7 @@ export function DashboardPage() {
   return (
     <Container size="lg" pt="xl" pb="xl">
       <Stack gap="lg">
-        <Group justify="space-between">
+        <Group justify="space-between" wrap="wrap">
           <Title order={2}>Dashboard</Title>
           <Group>
             <Button component={Link} to="/employees">
