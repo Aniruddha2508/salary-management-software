@@ -1,25 +1,19 @@
-import { useQuery } from '@tanstack/react-query'
-import { Badge, Container, Stack, Text, Title } from '@mantine/core'
-import { apiFetch } from './lib/apiClient'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { LoginPage } from './features/auth/LoginPage'
+import { ProtectedRoute } from './features/auth/ProtectedRoute'
+import { DashboardPage } from './features/dashboard/DashboardPage'
 
-// Task 1 placeholder: proves the React app can reach the Rails API through
-// the dev proxy. Routing, auth, and the real app pages land in later tasks.
 function App() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['health'],
-    queryFn: () => apiFetch('/health'),
-  })
-
   return (
-    <Container size="sm" pt="xl">
-      <Stack gap="sm">
-        <Title order={2}>ACME Salary Management</Title>
-        <Text c="dimmed">Scaffolding check: frontend → Rails API</Text>
-        {isLoading && <Badge color="gray">Checking API…</Badge>}
-        {isError && <Badge color="red">API unreachable</Badge>}
-        {data && <Badge color="green">API status: {data.status}</Badge>}
-      </Stack>
-    </Container>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<DashboardPage />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 
