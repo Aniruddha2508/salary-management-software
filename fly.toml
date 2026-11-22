@@ -1,0 +1,32 @@
+# Fly.io deployment config.
+#
+# The build context is this repo root (not backend/) because the
+# Dockerfile builds the React frontend and the Rails backend together -
+# see backend/Dockerfile.
+#
+# SQLite is used even in the deployed version (see docs/requirements.md),
+# so the database file lives on a persistent volume mounted at /rails/storage.
+app = "acme-salary-management"
+primary_region = "iad"
+
+[build]
+  dockerfile = "backend/Dockerfile"
+
+[env]
+  RAILS_ENV = "production"
+
+[[mounts]]
+  source = "salary_management_data"
+  destination = "/rails/storage"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

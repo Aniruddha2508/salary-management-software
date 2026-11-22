@@ -1,7 +1,18 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+# If running the rails server then create or migrate existing database.
+# Checks for "./bin/rails server" anywhere in the arguments rather than
+# requiring an exact position, since the CMD also passes bind/port flags
+# after "server" (see Dockerfile).
+args=("$@")
+has_rails=false
+has_server=false
+for arg in "${args[@]}"; do
+  [ "$arg" == "./bin/rails" ] && has_rails=true
+  [ "$arg" == "server" ] && has_server=true
+done
+
+if [ "$has_rails" = true ] && [ "$has_server" = true ]; then
   ./bin/rails db:prepare
 fi
 
