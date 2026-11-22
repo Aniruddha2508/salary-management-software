@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get "health", to: "health#show"
       get "csrf_token", to: "csrf_tokens#show"
       resource :session, only: %i[create show destroy]
+      resources :employees, only: %i[index show create update destroy]
     end
   end
 
