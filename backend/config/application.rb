@@ -40,5 +40,11 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # The HR Manager auth flow uses a server-side session stored in a signed,
+    # httpOnly cookie, so we re-add the cookie/session middleware that
+    # api_only mode strips out by default.
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "_salary_management_session"
   end
 end
