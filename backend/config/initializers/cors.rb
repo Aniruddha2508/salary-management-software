@@ -5,11 +5,16 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
+# In production, Rails serves the built React SPA itself (same origin),
+# so CORS isn't needed there by default. FRONTEND_ORIGIN lets a decoupled
+# deployment (frontend hosted separately from the API) opt back in without
+# a code change.
+allowed_origins = ["http://localhost:5173"]
+allowed_origins << ENV["FRONTEND_ORIGIN"] if ENV["FRONTEND_ORIGIN"].present?
+
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    # Vite dev server origin only. In production the React build is served
-    # by this same Rails app (single origin), so no CORS entry is needed there.
-    origins "http://localhost:5173"
+    origins(*allowed_origins)
 
     resource "/api/*",
       headers: :any,

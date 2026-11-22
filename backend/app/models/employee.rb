@@ -29,6 +29,7 @@ class Employee < ApplicationRecord
   validates :currency, presence: true, format: { with: CURRENCY_FORMAT, message: "must be a 3-letter ISO currency code (e.g. USD)" }
 
   validate :manager_is_not_self
+  validate :manager_exists
 
   private
 
@@ -36,5 +37,17 @@ class Employee < ApplicationRecord
     return if manager_id.blank?
 
     errors.add(:manager_id, "can't be the employee's own id") if manager_id == id
+  end
+
+  # belongs_to with optional: true only skips the *presence* check; it
+  # doesn't validate that a non-blank manager_id actually refers to a real
+  # employee. Without this, an invalid manager_id slips past #valid? and
+  # fails later at the database level as an unhandled
+  # ActiveRecord::InvalidForeignKey (a raw 500 instead of a clean 422).
+  def manager_exists
+    return if manager_id.blank?
+    return if manager_id == id # covered by manager_is_not_self already
+
+    errors.add(:manager_id, "must refer to an existing employee") unless Employee.exists?(manager_id)
   end
 end
