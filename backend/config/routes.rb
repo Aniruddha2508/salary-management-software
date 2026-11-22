@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       get "csrf_token", to: "csrf_tokens#show"
       resource :session, only: %i[create show destroy]
       resources :employees, only: %i[index show create update destroy]
+      get "analytics/summary", to: "analytics#summary"
+      get "analytics/by_country", to: "analytics#by_country"
+      get "analytics/by_department", to: "analytics#by_department"
     end
   end
 
