@@ -31,3 +31,10 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+
+# The built React SPA is copied into public/ by the Docker build (or
+# manually for a local production dry run) - never commit it, it's
+# generated from frontend/ source.
+/public/assets
+/public/index.html
+/public/vite.svg

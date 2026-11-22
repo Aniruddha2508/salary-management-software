@@ -27,6 +27,12 @@ gem "pagy", "~> 9.3"
 # Bulk-insert helper for the seed script (10,000 records)
 gem "activerecord-import"
 
+# Realistic fake data for the employee seed script. Kept outside the
+# development/test group deliberately: `rails db:seed` is a real task we
+# also run against the deployed environment (see docs/requirements.md),
+# so Faker needs to be available there too, not just in dev/test.
+gem "faker"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -36,7 +42,4 @@ group :development, :test do
 
   # Test data factories
   gem "factory_bot_rails"
-
-  # Realistic fake data for the employee seed script
-  gem "faker"
 end

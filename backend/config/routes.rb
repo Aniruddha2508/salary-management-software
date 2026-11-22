@@ -17,6 +17,15 @@ Rails.application.routes.draw do
     end
   end
 
+  # SPA fallback for production: any GET request that isn't an API route
+  # (and isn't the health check) gets the built frontend's index.html, so
+  # React Router can handle the client-side route on a full page
+  # load/refresh (e.g. /employees/42). Actual static files in public/
+  # (JS/CSS/images) are served directly by Rails' static file middleware
+  # before a request ever reaches this route.
+  get "*path", to: "static#index",
+               constraints: ->(req) { !req.path.start_with?("/api") && req.path != "/up" }
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

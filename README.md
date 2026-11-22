@@ -18,6 +18,7 @@ requirements document (goal, scope, and what's deliberately left out).
 backend/   Rails API-only application
 frontend/  React (Vite) single-page application
 docs/      Requirements, architecture, trade-offs, AI usage notes
+fly.toml   Fly.io deployment config (see docs/deployment.md)
 ```
 
 ## Prerequisites
@@ -38,6 +39,7 @@ port 5173. The Vite dev server proxies `/api/*` requests to Rails (see
 cd backend
 bundle install
 bin/rails db:prepare
+bin/rails db:seed      # HR Manager account + 10,000 demo employees
 bin/rails server -p 3000
 ```
 
@@ -49,7 +51,9 @@ npm install
 npm run dev
 ```
 
-Visit `http://localhost:5173`.
+Visit `http://localhost:5173` and sign in with `hr-manager@acme.test` /
+`password123` (override via `HR_MANAGER_EMAIL`/`HR_MANAGER_PASSWORD`
+before seeding).
 
 ## Running tests
 
@@ -60,18 +64,14 @@ cd backend
 bundle exec rspec
 ```
 
-## Seeding data
+## Deployment
 
-Once the `Employee` model and seed script exist (see `docs/requirements.md`
-task plan), populate the database with 10,000 sample employees:
-
-```bash
-cd backend
-bin/rails db:seed
-```
+See [`docs/deployment.md`](docs/deployment.md) for building the
+production Docker image and deploying to Fly.io (or Render).
 
 ## Status
 
-This project is under active development following an incremental,
-task-by-task build plan. See `docs/` for design decisions and reasoning
-as they're added.
+All planned features are implemented: authentication, employee CRUD with
+search/filter/pagination, and an analytics dashboard, backed by a
+10,000-employee seed dataset. See `docs/` for design decisions and
+reasoning.
