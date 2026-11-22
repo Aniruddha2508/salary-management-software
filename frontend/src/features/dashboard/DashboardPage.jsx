@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom'
 import { Button, Container, Group, Stack, Text, Title } from '@mantine/core'
 import { useAuth } from '../auth/useAuth'
 
-// Placeholder landing page for a signed-in HR Manager. Replaced with real
-// analytics content in a later task; for now it exists to prove the
-// login -> protected route -> logout loop works end to end.
+// Placeholder landing page for a signed-in HR Manager. Analytics content
+// (Task 10) replaces the body of this page; the employees link is real.
 export function DashboardPage() {
   const { user, logout } = useAuth()
 
@@ -17,6 +17,9 @@ export function DashboardPage() {
           </Button>
         </Group>
         <Text>Signed in as {user?.name} ({user?.email})</Text>
+        <Button component={Link} to="/employees">
+          View Employees
+        </Button>
       </Stack>
     </Container>
   )
