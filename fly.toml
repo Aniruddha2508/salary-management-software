@@ -1,32 +1,29 @@
-# Fly.io deployment config.
+# fly.toml app configuration file generated for salarymanagement on 2026-11-22T16:31:46Z
 #
-# The build context is this repo root (not backend/) because the
-# Dockerfile builds the React frontend and the Rails backend together -
-# see backend/Dockerfile.
+# See https://docs.fly.io/reference/configuration for information about how to use this file.
 #
-# SQLite is used even in the deployed version (see docs/requirements.md),
-# so the database file lives on a persistent volume mounted at /rails/storage.
-app = "acme-salary-management"
-primary_region = "iad"
+
+app = 'salarymanagement'
+primary_region = 'ams'
 
 [build]
-  dockerfile = "backend/Dockerfile"
+  dockerfile = 'backend/Dockerfile'
 
 [env]
-  RAILS_ENV = "production"
+  RAILS_ENV = 'production'
 
 [[mounts]]
-  source = "salary_management_data"
-  destination = "/rails/storage"
+  source = 'salary_management_data'
+  destination = '/rails/storage'
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = "off"
+  auto_stop_machines = 'off'
   auto_start_machines = true
   min_machines_running = 1
 
 [[vm]]
-  memory = "512mb"
-  cpu_kind = "shared"
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
