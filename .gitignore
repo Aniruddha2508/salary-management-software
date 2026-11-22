@@ -1,0 +1,11 @@
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+
+# Each app manages its own ignore rules (node_modules, SQLite db files,
+# Rails credentials, build output, etc.) in backend/.gitignore and
+# frontend/.gitignore.
+
+# Original assessment brief - not part of the deliverable.
+salary-assessment-docx.docx
