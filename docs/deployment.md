@@ -40,7 +40,7 @@ deploys and restarts.
 # One-time setup
 fly auth login
 fly launch --no-deploy        # creates the app from fly.toml, skip the first deploy prompt
-fly volumes create salary_management_data --region iad --size 1
+fly volumes create salary_management_data --region ams --size 1
 fly secrets set RAILS_MASTER_KEY=$(cat backend/config/master.key)
 
 # Deploy

@@ -2,6 +2,12 @@
 #
 # See https://docs.fly.io/reference/configuration for information about how to use this file.
 #
+# The build context is this repo root (not backend/) because the
+# Dockerfile builds the React frontend and the Rails backend together -
+# see backend/Dockerfile.
+#
+# SQLite is used even in the deployed version (see docs/requirements.md),
+# so the database file lives on a persistent volume mounted at /rails/storage.
 
 app = 'salarymanagement'
 primary_region = 'ams'
