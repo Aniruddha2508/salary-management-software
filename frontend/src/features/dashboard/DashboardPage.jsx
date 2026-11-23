@@ -18,6 +18,7 @@ import {
 import { useAuth } from '../auth/useAuth'
 import { fetchByCountry, fetchByDepartment, fetchSummary } from '../analytics/analyticsApi'
 import { BreakdownTable } from '../analytics/BreakdownTable'
+import { HeadcountCharts } from '../analytics/HeadcountCharts'
 
 function SummaryCard({ title, value, subtitle }) {
   return (
@@ -109,6 +110,13 @@ export function DashboardPage() {
               Pay by Currency
             </Title>
             <BreakdownTable rows={summaryQuery.data.by_currency} groupLabel="Currency" groupKey="currency" />
+          </Stack>
+        )}
+
+        {byCountryQuery.data && byDepartmentQuery.data && (
+          <Stack gap="md">
+            <Title order={4}>Headcount at a Glance</Title>
+            <HeadcountCharts byCountry={byCountryQuery.data} byDepartment={byDepartmentQuery.data} />
           </Stack>
         )}
 
