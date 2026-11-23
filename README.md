@@ -4,7 +4,11 @@ A web application for the ACME HR Manager to manage salary data for 10,000
 employees across multiple countries, replacing a spreadsheet-based workflow.
 
 See [`docs/requirements.md`](docs/requirements.md) for the one-page
-requirements document (goal, scope, and what's deliberately left out).
+requirements document (goal, scope, and what's deliberately left out),
+[`docs/architecture.md`](docs/architecture.md) for diagrams and design
+decisions, [`docs/trade-offs.md`](docs/trade-offs.md) for implementation
+trade-offs, and [`docs/ai-usage.md`](docs/ai-usage.md) for how AI tools
+were used to build this.
 
 ## For reviewers: quick start
 
@@ -34,7 +38,7 @@ see **Running locally** below.
 ```
 backend/   Rails API-only application
 frontend/  React (Vite) single-page application
-docs/      Requirements and deployment notes
+docs/      Requirements, architecture, trade-offs, AI usage, deployment
 fly.toml   Fly.io deployment config (see docs/deployment.md)
 ```
 
